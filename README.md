@@ -8,6 +8,8 @@ Create a REST API using the Micronaut framework that will serve as backend for a
 We are not looking for a specific problem to be solved, instead architect your application as you see fit. Some example 
 applications might be an E-Commerce Store, Messaging App, etc.  
 
+Feel free to be creative with how you solve problems/architect your applications.
+
 Requirements:
 - Create a controller for the user object
   - This controller should handle all CRUD operations.
