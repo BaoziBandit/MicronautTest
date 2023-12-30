@@ -3,8 +3,6 @@ package com.safestreets.controllers;
 import java.util.List;
 
 import com.safestreets.model.Order;
-import com.safestreets.model.User;
-import com.safestreets.model.repository.UserRepository;
 import com.safestreets.model.repository.OrderRepository;
 
 import io.micronaut.http.HttpResponse;
