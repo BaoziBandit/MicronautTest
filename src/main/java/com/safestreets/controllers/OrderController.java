@@ -20,7 +20,6 @@ import jakarta.inject.Inject;
 @Controller("/order")
 public class OrderController {
 
-  @Inject UserRepository userRepo;
   @Inject OrderRepository orderRepo;
 
   // Return complete list of orders
@@ -39,11 +38,8 @@ public class OrderController {
   // Return list of Orders related to a specifc User's ID
   @Get("/user/{id}")
   public HttpResponse<List<Order>> getOrdersByUserId(Long id){
-    User user = userRepo.findById(id).orElse(null);
     List<Order> order = null;
-    if(user != null){
-      order = orderRepo.findAll().stream().filter(o -> o.getUser().getId() == user.getId()).toList();
-    }
+    order = orderRepo.findAll().stream().filter(o -> o.getUser().getId() == id).toList();
     if(order == null){
       return HttpResponse.badRequest(order);
     }
