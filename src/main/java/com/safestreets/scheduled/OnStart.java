@@ -1,7 +1,15 @@
 package com.safestreets.scheduled;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.safestreets.model.Order;
+import com.safestreets.model.Product;
 import com.safestreets.model.User;
+import com.safestreets.services.OrderService;
+import com.safestreets.services.ProductService;
 import com.safestreets.services.UserService;
+
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.env.Environment;
 import io.micronaut.context.event.ApplicationEventListener;
@@ -23,9 +31,13 @@ import lombok.extern.slf4j.Slf4j;
 public class OnStart implements ApplicationEventListener<StartupEvent> {
 
   private final UserService userService;
+  private final ProductService prodService;
+  private final OrderService orderService;
 
-  public OnStart(UserService userService) {
+  public OnStart(UserService userService, ProductService prodService, OrderService orderService) {
     this.userService = userService;
+    this.prodService = prodService;
+    this.orderService = orderService;
   }
 
   @Async
@@ -34,5 +46,17 @@ public class OnStart implements ApplicationEventListener<StartupEvent> {
     log.info("Executing startup job - creating a user.");
     User user = userService.createNewUser("Test User", "test@safestreets.com", "ADMIN");
     log.info("Created user (Id:" + user.getId() + ")");
+    
+    // Test products to have something to retrieve via API
+    List<Product> products = new ArrayList<>();
+    for(int i = 1; i <= 3; i++){
+      Product product = prodService.createNewProduct("Product" + i, i);
+      log.info(String.format("Created product (Id:%d)", product.getId()));
+      products.add(product);
+    }
+
+    // Test Order to have something to retrieve via API
+    Order order = orderService.createNewOrder(user, products);
+    log.info(String.format("Created order (Id:%d)", order.getId()));
   }
 }

@@ -7,17 +7,20 @@ import io.micronaut.serde.annotation.Serdeable;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * User
- * Created By: dylanthompson
- * Created On: 12/28/23
- **/
 @Getter
 @Setter
 @Serdeable
 @MappedEntity
-public class User extends BaseVersionedDomain {
+public class Product extends BaseVersionedDomain{
   String name;
-  String email;
-  String role;
+  double price;
+
+  public Product withName(String name){
+    this.name = name;
+    return this;
+  }
+  public Product withPrice(double price){
+    this.price = price;
+    return this;
+  }
 }

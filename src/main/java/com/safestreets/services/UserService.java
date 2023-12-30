@@ -25,7 +25,7 @@ public class UserService {
     user.setName(name);
     user.setEmail(email);
     user.setRole(role);
-
+    log.info("User creation success! Id: " + user.getId());
     return userRepository.save(user);
   }
 
