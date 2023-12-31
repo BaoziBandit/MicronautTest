@@ -21,9 +21,14 @@ public class ProductService {
   }
 
   public Product createNewProduct(String name, double price) {
-    Product product = new Product().withName(name).withPrice(price);
-    log.info("Product creation success! Id: " + product.getId());
-    return productRepository.save(product);
+    Product product = new Product();
+    product.setName(name);
+    product.setPrice(price);
+    product = productRepository.save(product);
+    if(product.getId() > 0){
+      log.info("Product creation success! Id: " + product.getId());
+    }
+    return product;
   }
 
 }

@@ -26,8 +26,19 @@ public class OrderService {
   }
 
   public Order createNewOrder(User user, List<Product> products) {
-    Order order = new Order().withUser(user).withProducts(products);
-    log.info("Order creation success! Id: " + order.getId());
-    return orderRepository.save(order);
+    Order order = new Order();
+    order.setUser(user);
+    order.setProducts(products);
+    order = orderRepository.save(order);
+    if(order.getId() != 0){
+      log.info("Order creation success! Id: " + order.getId());
+    }
+    return order;
   }
+
+  public List<Order> findByUserId(Long id){
+    return orderRepository.findAllByUserId(id);
+  }
+
+
 }

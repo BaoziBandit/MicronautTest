@@ -25,8 +25,11 @@ public class UserService {
     user.setName(name);
     user.setEmail(email);
     user.setRole(role);
-    log.info("User creation success! Id: " + user.getId());
-    return userRepository.save(user);
+    user = userRepository.save(user);
+    if(user.getId() > 0){
+      log.info("User creation success! Id: " + user.getId());
+    }
+    return user;
   }
 
 }

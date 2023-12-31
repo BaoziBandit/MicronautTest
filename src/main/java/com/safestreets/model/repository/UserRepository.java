@@ -7,4 +7,6 @@ import io.micronaut.data.repository.CrudRepository;
 
 @JdbcRepository(dialect = Dialect.H2)
 public interface UserRepository extends CrudRepository<User, Long> {
+  public User updateById(Long id, User user);
+  public void deleteById(Long id);
 }

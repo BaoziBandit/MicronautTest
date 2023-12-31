@@ -10,6 +10,7 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
 import jakarta.inject.Inject;
@@ -28,20 +29,14 @@ public class OrderController {
   
   // Return specific Order based on its ID
   @Get("/{id}")
-  public HttpResponse<Order> getOrder(Long id){
-    Order order = orderRepo.findById(id).orElse(null);
-    return HttpResponse.ok(order);
+  public HttpResponse<Order> getOrder(@PathVariable Long id){
+    return HttpResponse.ok(orderRepo.findById(id).orElse(null));
   }
 
   // Return list of Orders related to a specifc User's ID
   @Get("/user/{id}")
-  public HttpResponse<List<Order>> getOrdersByUserId(Long id){
-    List<Order> order = null;
-    order = orderRepo.findAll().stream().filter(o -> o.getUser().getId() == id).toList();
-    if(order == null){
-      return HttpResponse.badRequest(order);
-    }
-    return HttpResponse.ok(order);
+  public HttpResponse<List<Order>> getOrdersByUserId(@PathVariable Long id){
+    return HttpResponse.ok(orderRepo.findAllByUserId(id));
   }
 
   // Create a new Order based on the JSON format seen from the GET calls.
@@ -53,20 +48,14 @@ public class OrderController {
 
   // Update an existing Order
   @Put("/{id}")
-  public HttpResponse<Order> updateOrder(@Body Order order, Long id){
-    order.setId(id);
-    orderRepo.update(order);
-    return HttpResponse.ok(order);
+  public HttpResponse<Order> updateOrder(@Body Order order, @PathVariable Long id){
+    return HttpResponse.ok(orderRepo.updateById(id, order));
   }
 
   // Delete an Order by Id
   @Delete("/{id}")
-  public HttpResponse<Order> deleteOrder(Long id){
-    Order order = orderRepo.findById(id).orElse(null);
-    if(order == null){
-      return HttpResponse.badRequest();
-    }
-    orderRepo.delete(order);
-    return HttpResponse.ok(order);
+  public HttpResponse<Order> deleteOrder(@PathVariable Long id){
+    orderRepo.deleteById(id);
+    return HttpResponse.ok();
   }
 }
