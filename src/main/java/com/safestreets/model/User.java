@@ -19,5 +19,21 @@ import lombok.Setter;
 public class User extends BaseVersionedDomain {
   String name;
   String email;
-  String role;
+  Role role;
+
+  public User withName(String name){
+    this.name = name;
+    return this;
+  }
+  public User withEmail(String email){
+    this.email = email;
+    return this;
+  }
+  public User withRole(String role){
+    this.role = Role.valueOf(role);
+    return this;
+  }
+  enum Role{
+    ADMIN, CUSTOMER
+  }
 }

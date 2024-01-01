@@ -21,10 +21,7 @@ public class UserService {
   }
 
   public User createNewUser(String name, String email, String role) {
-    User user = new User();
-    user.setName(name);
-    user.setEmail(email);
-    user.setRole(role);
+    User user = new User().withName(name).withEmail(email).withRole(role);
     user = userRepository.save(user);
     if(user.getId() > 0){
       log.info("User creation success! Id: " + user.getId());

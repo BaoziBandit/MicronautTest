@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.safestreets.model.base.BaseVersionedDomain;
 
-import io.micronaut.data.annotation.Join;
 import io.micronaut.data.annotation.MappedEntity;
 import io.micronaut.data.annotation.Relation;
 import io.micronaut.serde.annotation.Serdeable;
@@ -18,6 +17,14 @@ import lombok.Setter;
 public class Order extends BaseVersionedDomain {
   User user;
   @Relation(value = Relation.Kind.MANY_TO_MANY)
-  @Join("product")
   List<Product> products;
+
+  public Order withUser(User user){
+    this.user = user;
+    return this;
+  }
+  public Order withProducts(List<Product> products){
+    this.products = products;
+    return this;
+  }
 }

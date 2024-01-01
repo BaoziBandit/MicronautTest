@@ -26,9 +26,7 @@ public class OrderService {
   }
 
   public Order createNewOrder(User user, List<Product> products) {
-    Order order = new Order();
-    order.setUser(user);
-    order.setProducts(products);
+    Order order = new Order().withUser(user).withProducts(products);
     order = orderRepository.save(order);
     if(order.getId() != 0){
       log.info("Order creation success! Id: " + order.getId());
